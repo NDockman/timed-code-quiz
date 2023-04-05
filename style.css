@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+}
+
+header h1 {
+    background-color:darkturquoise;
+    width: 15%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    text-align: center;
+}
+
+main {
+    background-color:powderblue;
+    margin: 1%;
+}
+
+#start-button {
+    font-size: 20px;
+    width: 200px;
+    height: 30px;
+    /* figure out how to center the button */
+}
+
+.question {
+    border: 2px solid red;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#answer-field {
+    border: 2px solid red;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#answer-field button {
+    margin-right: 7%;
+    margin-left: 7%
+}
+
+#scoreboard {
+    font-size: 26px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    font-weight: bold;
+    text-align: center;
+    width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+}
