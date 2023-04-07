@@ -1,9 +1,10 @@
 
-var startButton = document.querySelector("#start-button")
-var answerButton = document.querySelector("#answer-field button");
-var questionContainer = document.querySelector("#question-field")
-var answerContainer = document.querySelector('#answer-field')
-var mainContainer = document.querySelector('#main-container')
+var startButton = document.querySelector("#start-button");
+// var answerButton = document.querySelector("#answer-field button");
+var questionContainer = document.querySelector("#question-field");
+var answerContainer = document.querySelector("#answer-field");
+var mainContainer = document.querySelector("#main-container");
+var correctOrIncorrectContainer = document.querySelector(".correct-incorrect");
 
 // var numOfQuestions = 4;
 
@@ -21,7 +22,7 @@ var arrayOfQuestions = [
     {
         question: "Which instrument belongs to the percussion family?",
         choices: ["Lute", "Oboe", "Cymbals", "Yodel"],
-        correct: "choice 3"
+        correct: "Cymbals"
     }
     //TODO: make one more question
 ]
@@ -32,50 +33,51 @@ var timeLeft = 60;
 var totalScore = 0;
 var initials;
 
-var questionIndex = 0
+var questionIndex = 0;
 
 startButton.addEventListener("click", function (event) {
-    //make the start button disappear        event.target.setAttribute()
 
-    // startButton.classList.add('hide')
-    startButton.setAttribute('class', 'hide')
-    renderQuestion()
-    startTimer()
+    // startButton.classList.add('hide');
+    startButton.setAttribute("class", "hide");
+    renderQuestion();
+    startTimer();
 })
 
 function renderQuestion() {
-    questionContainer.textContent = ""
-    answerContainer.textContent = ""
+    questionContainer.textContent = "";
+    answerContainer.textContent = "";
 
     if (questionIndex >= arrayOfQuestions.length) {
         return
     }
 
-    var questionEl = document.createElement("h1")
-    questionEl.setAttribute('class', 'question')
-    questionEl.textContent = arrayOfQuestions[questionIndex].question
+    var questionEl = document.createElement("h1");
+    questionEl.setAttribute("class", "question");
+    questionEl.textContent = arrayOfQuestions[questionIndex].question;
 
     for (var x = 0; x < arrayOfQuestions[questionIndex].choices.length; x++) {
-        var choicesEl = document.createElement('button')
-        choicesEl.textContent = arrayOfQuestions[questionIndex].choices[x]
 
-        answerContainer.append(choicesEl)
+        var choicesEl = document.createElement("button");
+        choicesEl.textContent = arrayOfQuestions[questionIndex].choices[x];
+        answerContainer.append(choicesEl);
 
-        choicesEl.addEventListener('click', function (event) {
+        choicesEl.addEventListener("click", function (event) {
             if (event.target.textContent === arrayOfQuestions[questionIndex].correct) {
-                console.log('correct')
-                totalScore += 10
+                console.log("correct");
+                totalScore += 25;
+                correctOrIncorrectContainer.textContent = "Correct";
             }
             else {
-                console.log('incorrect')
-                timeLeft -= 10
+                console.log("incorrect");
+                timeLeft -= 10;
+                correctOrIncorrectContainer.textContent = "Incorrect";
             }
-            questionIndex++
-            renderQuestion()
+            questionIndex++;
+            renderQuestion();
         })
     }
 
-    questionContainer.append(questionEl)
+    questionContainer.append(questionEl);
 }
 
 
@@ -95,29 +97,25 @@ function renderQuestion() {
 
 
 
-//TODO: add a submit button
-
-
 function endQuiz() {
-    //clear the screen
-    //create the elements needed for the Highscores screen
-    //document.createElement("button")       this will be the submit button
-    console.log('end of quiz')
 
-    mainContainer.textContent = ''
+    console.log("end of quiz");
+
+    mainContainer.textContent = "";
 
     // create an input and a button
-    var input = document.createElement('input')
-    input.setAttribute('placeholder', 'Name')
+    var input = document.createElement('input');     //creates an input field
+    input.setAttribute('placeholder', 'Name');
     
-    var btn = document.createElement('button')
-    btn.textContent = "Submit"
+    var submitButton = document.createElement('button');      //creates a submit button
+    submitButton.textContent = "Submit";
     
     // append them to main container
-    mainContainer.append(input, btn)
+    mainContainer.append(input, submitButton);
 
     // add event listener to this button
-    btn.addEventListener('click', function() {
+    submitButton.addEventListener('click', function() {
+
         // get the value of the input and the totalscore var and put them into an object
         var userData = {
             name: input.value,
@@ -125,18 +123,22 @@ function endQuiz() {
         }
 
         // save it to local storage
-        var storage = JSON.parse(localStorage.getItem('quizScores'))
+        var storage = JSON.parse(localStorage.getItem("quizScores"));
         if (storage === null) {
-            storage = []
+            storage = [];
         }
 
-        storage.push(userData)
-        localStorage.setItem('quizScores', JSON.stringify(storage))
-        window.location.href = 'highscore.html'
+        storage.push(userData);
+        localStorage.setItem('quizScores', JSON.stringify(storage));
+        window.location.href = 'highscore.html';
     })
 
     saveScore();
 }
+
+
+
+
 
 function startTimer() {
     timer = setInterval(function () {
@@ -152,16 +154,6 @@ function startTimer() {
 }
 
 
-
-//when a correct answer is selected, add to the score
-function answeredCorrect() {
-    totalScore += 25;
-}
-
-//when an incorrect answer is given, subtract ten seconds
-function answeredIncorrect() {
-    timeLeft = timeLeft - 10;
-}
 
 //when the quiz ends, user enters initials and saves them to a list of previous scores
 function saveScore() {
