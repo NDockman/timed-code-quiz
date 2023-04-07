@@ -7,38 +7,23 @@ var mainContainer = document.querySelector('#main-container')
 
 // var numOfQuestions = 4;
 
-// var arrayOfQuestions = ["3 + 8 =", "4 - 2 =", "5 * 3 ="];
-// var currentQuestion = arrayOfQuestions[0];
-
-// var arrayOfCorrectAnswers = ["11", "2", "15"];
-// var arrayOfIncorrectAnswers = [];
-// var currentCorrectAnswer;
-// var currentIncorrectAnswers;
-
-// var questionOne = {
-//     question: "3 + 8 =",
-//     answerA: "2",
-//     answerB: "13",
-//     answerC: "11",
-//     answerD: "7"
-// }
-
 var arrayOfQuestions = [
     {
-        question: "This is question 1",
-        choices: ["choice 1", "choice 2", "choice 3"],
-        correct: "choice 1"
+        question: "What is 3 * 5?",
+        choices: ["15", "8", "10", "1"],
+        correct: "15"
     },
     {
-        question: "This is question 2",
-        choices: ["choice 1", "choice 2", "choice 3", "choice 4"],
-        correct: "choice 2"
+        question: "What is the capital of Japan?",
+        choices: ["Kyoto", "Tokyo", "Alaska", "Edo"],
+        correct: "Tokyo"
     },
     {
-        question: "This is question 3",
-        choices: ["choice 1", "choice 2", "choice 3"],
+        question: "Which instrument belongs to the percussion family?",
+        choices: ["Lute", "Oboe", "Cymbals", "Yodel"],
         correct: "choice 3"
     }
+    //TODO: make one more question
 ]
 
 var timer;
@@ -70,9 +55,9 @@ function renderQuestion() {
     questionEl.setAttribute('class', 'question')
     questionEl.textContent = arrayOfQuestions[questionIndex].question
 
-    for (var i = 0; i < arrayOfQuestions[questionIndex].choices.length; i++) {
+    for (var x = 0; x < arrayOfQuestions[questionIndex].choices.length; x++) {
         var choicesEl = document.createElement('button')
-        choicesEl.textContent = arrayOfQuestions[questionIndex].choices[i]
+        choicesEl.textContent = arrayOfQuestions[questionIndex].choices[x]
 
         answerContainer.append(choicesEl)
 
@@ -80,7 +65,8 @@ function renderQuestion() {
             if (event.target.textContent === arrayOfQuestions[questionIndex].correct) {
                 console.log('correct')
                 totalScore += 10
-            } else {
+            }
+            else {
                 console.log('incorrect')
                 timeLeft -= 10
             }
@@ -149,14 +135,12 @@ function endQuiz() {
         window.location.href = 'highscore.html'
     })
 
-
-
     saveScore();
 }
 
 function startTimer() {
     timer = setInterval(function () {
-        if (timeLeft <= 0 || questionIndex >= arrayOfQuestions.length) {        //might need to do timeLeft <= 0 because of answeredIncorrect()
+        if (timeLeft <= 0 || questionIndex >= arrayOfQuestions.length) {
             clearInterval(timer);
             endQuiz();
         }
@@ -168,29 +152,6 @@ function startTimer() {
 }
 
 
-
-//progresses quiz to the next question
-//check to see if there is a next question
-function goToNextQuestion() {
-    if (numOfQuestions > 0) {
-        numOfQuestions--;
-
-        //use if, elif, else to check what question I am on
-        if (currentQuestion === arrayOfQuestions[0]) {
-            //go to question 2
-        }
-        else if (currentQuestion === arrayOfQuestions[1]) {
-            //go to question 3
-        }
-        else {
-            //go to question 4
-        }
-    }
-
-    else {
-        endQuiz();
-    }
-}
 
 //when a correct answer is selected, add to the score
 function answeredCorrect() {
