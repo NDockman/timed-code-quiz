@@ -103,37 +103,34 @@ function endQuiz() {
 
     mainContainer.textContent = "";
 
-    // create an input and a button
-    var input = document.createElement('input');     //creates an input field
-    input.setAttribute('placeholder', 'Name');
+    var input = document.createElement("input");              //creates an input field
+    input.setAttribute("class", "Enter your initials");
     
-    var submitButton = document.createElement('button');      //creates a submit button
+    var submitButton = document.createElement("button");      //creates a submit button
     submitButton.textContent = "Submit";
     
-    // append them to main container
-    mainContainer.append(input, submitButton);
+    mainContainer.append(input, submitButton);                //appends input and submit button to mainContainer
 
-    // add event listener to this button
-    submitButton.addEventListener('click', function() {
-
-        // get the value of the input and the totalscore var and put them into an object
-        var userData = {
+    submitButton.addEventListener("click", function() {
+        var userInitialsAndScore = {
             name: input.value,
             score: totalScore
         }
 
-        // save it to local storage
         var storage = JSON.parse(localStorage.getItem("quizScores"));
         if (storage === null) {
             storage = [];
         }
 
-        storage.push(userData);
-        localStorage.setItem('quizScores', JSON.stringify(storage));
-        window.location.href = 'highscore.html';
+        storage.push(userInitialsAndScore);
+        localStorage.setItem("quizScores", JSON.stringify(storage));       //quizScores becomes key name, storage becomes key value
+        // window.location.href = 'highscore.html';
+
+        //put showHighScores() here?
+        showHighscores();
     })
 
-    saveScore();
+    
 }
 
 
@@ -155,7 +152,13 @@ function startTimer() {
 
 
 
-//when the quiz ends, user enters initials and saves them to a list of previous scores
-function saveScore() {
 
+function showHighscores() {
+    mainContainer.textContent = "";
+    var highScoresEl = document.createElement("section");
+    var highScoresUl = document.createElement("ul");
+    var highScoresLi = document.createElement("li");
+    highScoresEl.append(highScoresUl);
+    highScoresUl.append(highScoresLi);
+    highScoresLi.textContent = JSON.parse(localStorage.getItem("quizScores"));
 }
