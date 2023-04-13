@@ -1,12 +1,10 @@
 
 var startButton = document.querySelector("#start-button");
-// var answerButton = document.querySelector("#answer-field button");
+
 var questionContainer = document.querySelector("#question-field");
 var answerContainer = document.querySelector("#answer-field");
 var mainContainer = document.querySelector("#main-container");
 var correctOrIncorrectContainer = document.querySelector(".correct-incorrect");
-
-// var numOfQuestions = 4;
 
 var arrayOfQuestions = [
     {
@@ -24,7 +22,6 @@ var arrayOfQuestions = [
         choices: ["Lute", "Oboe", "Cymbals", "Yodel"],
         correct: "Cymbals"
     }
-    //TODO: make one more question
 ]
 
 var timer;
@@ -82,21 +79,6 @@ function renderQuestion() {
 
 
 
-//TODO: find a way to test each of the 4 answer buttons
-// answerButton.addEventListener("click", function(event) {
-//     if (event.target.dataset.state === "correct") {
-//         answeredCorrect();
-//         console.log("you answered correct");
-//     }
-//     else {
-//         answeredIncorrect();
-//         console.log("you answered incorrect");
-//     }
-//     goToNextQuestion();
-// })
-
-
-
 function endQuiz() {
 
     console.log("end of quiz");
@@ -123,19 +105,12 @@ function endQuiz() {
         }
 
         storage.push(userInitialsAndScore);
-        localStorage.setItem("quizScores", JSON.stringify(storage));       //quizScores becomes key name, storage becomes key value
-        // window.location.href = 'highscore.html';
+        localStorage.setItem("quizScores", JSON.stringify(storage));       //storage becomes key value
 
-        //put showHighScores() here?
+        
         showHighscores();
-    })
-
-    
+    })    
 }
-
-
-
-
 
 function startTimer() {
     timer = setInterval(function () {
@@ -150,15 +125,18 @@ function startTimer() {
     }, 1000)
 }
 
-
-
-
 function showHighscores() {
+
     mainContainer.textContent = "";
-    var highScoresEl = document.createElement("section");
+
+    var highScoreArr = JSON.parse(localStorage.getItem("quizScores")) || [];
+
     var highScoresUl = document.createElement("ul");
-    var highScoresLi = document.createElement("li");
-    highScoresEl.append(highScoresUl);
-    highScoresUl.append(highScoresLi);
-    highScoresLi.textContent = JSON.parse(localStorage.getItem("quizScores"));
+
+    for (var i = 0; i < highScoreArr.length; i++) {
+        var highScoresLi = document.createElement("li");
+        highScoresLi.textContent = highScoreArr[i].name + ": " + highScoreArr[i].score;
+        highScoresUl.append(highScoresLi);
+    }
+    mainContainer.append(highScoresUl);
 }
